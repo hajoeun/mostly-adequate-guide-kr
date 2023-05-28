@@ -42,7 +42,7 @@ const checkAge = (age) => {
 };
 ```
 
-순수하지 않은 부분에서 `checkAge`는 결과값을 결정할 때 변하는 값(mutable variable)인 `minimum`에 의존합니다. 다시 말해서, 함수가 시스템의의 상태에 의존하고 이는 외부 환경에 대해 생각해야하는 [인지 부담](https://en.wikipedia.org/wiki/Cognitive_load)을 증가시키는 좋지 않은 결과를 낳습니다..
+순수하지 않은 부분에서 `checkAge`는 결과값을 결정할 때 변하는 값(mutable variable)인 `minimum`에 의존합니다. 다시 말해서, 함수가 시스템의의 상태에 의존하고 이는 외부 환경에 대해 생각해야하는 [인지 부담](https://en.wikipedia.org/wiki/Cognitive\_load)을 증가시키는 좋지 않은 결과를 낳습니다..
 
 이 예에서 그렇게 보이지는 않을지도 모르지만 상태에 의존하는 것은 시스템의 복잡성을 높이는 가장 큰 원인 중의 하나입니다(http://curtclifton.net/papers/MoseleyMarks06a.pdf). `checkAge`는 입력이 아니라 외부요소에 의존해서 다른 결과를 반환할 수도 있어요. 이것은 순수성에 위배될 뿐만 아니라 소프트웨어에 대해 생각할 때마다 우리의 머리를 쥐어짜게 만듭니다.
 
@@ -62,14 +62,14 @@ const immutableState = Object.freeze({ minimum: 21 });
 
 부수 효과는 다음과 같은 것이 있습니다.
 
-- 파일 시스템을 바꾸기
-- 데이터베이스에 레코드를 삽입하기
-- http 호출을 하기
-- 변경(mutations)
-- 화면에 출력하기 / 로깅
-- 유저에게 인풋을 받기
-- DOM을 쿼리하기
-- 시스템 상태에 접근하기
+* 파일 시스템을 바꾸기
+* 데이터베이스에 레코드를 삽입하기
+* http 호출을 하기
+* 변경(mutations)
+* 화면에 출력하기 / 로깅
+* 유저에게 인풋을 받기
+* DOM을 쿼리하기
+* 시스템 상태에 접근하기
 
 그리도 이것 말고도 많지요. 함수 밖 세상과 상호작용하는 어떠한 것도 부수효과입니다. 아마 이런 것들 없이 쓸모있는 프로그래을 만들 수 있을 지 의심이 갈거에요. 함수형 프로그래밍의 철학은 부수효과가 잘못된 행동을 야기하는 첫번째 원인이라고 말합니다.
 
@@ -83,26 +83,29 @@ const immutableState = Object.freeze({ minimum: 21 });
 
 mathisfun.com 에서:
 
-> 함수는 값 사이의 특별한 관계입니다:
-> 각각의 입력은 딱 하나의 출력을 주지요.
+> 함수는 값 사이의 특별한 관계입니다: 각각의 입력은 딱 하나의 출력을 주지요.
 
 다시 말해서, 함수는 단순히 두 값 사이의 관계입니다. 입력과 출력이요. 각각의 입력이 딱 하나의 출력을 가지지만 출력은 각 입력에 대해 유일할 필요는 없어요. 아래 그림은 `x`에서 `y`로 가는 유효한 함수를 보여줍니다.
 
-<img src="images/function-sets.gif" alt="function sets" />(https://www.mathsisfun.com/sets/function.html)
+![function sets](images/function-sets.gif)(https://www.mathsisfun.com/sets/function.html)
 
 반대로, 아래 그림은 입력 `5`를 여러 출력과 연결하기 때문에 함수가 **아닙니다.**
 
-<img src="images/relation-not-function.gif" alt="relation not function" />(https://www.mathsisfun.com/sets/function.html)
+![relation not function](images/relation-not-function.gif)(https://www.mathsisfun.com/sets/function.html)
 
 함수는 (입력, 출력) 쌍으로 이루어진 집합으로 생각할 수도 있어요. `[(1,2), (3,6), (5,10)]` (이 함수는 입력을 두배하네요)
 
 아니면 표로 나타낼 수도 있죠.
 
-<table> <tr> <th>입력</th> <th>출력</th> </tr> <tr> <td>1</td> <td>2</td> </tr> <tr> <td>2</td> <td>4</td> </tr> <tr> <td>3</td> <td>6</td> </tr> </table>
+| 입력 | 출력 |
+| -- | -- |
+| 1  | 2  |
+| 2  | 4  |
+| 3  | 6  |
 
 또는 `x`를 입력, `y`를 출력으로 하는 그래프로도 나타낼 수 있어요.
 
-<img src="images/fn_graph.png" width="300" height="300" alt="function graph" />
+![function graph](images/fn\_graph.png)
 
 상세한 구현이 없어도 입력이 출력을 가르키기만 한다면 됩니다. 함수는 그저 입력과 출력 사이의 단순한 매핑이기 때문에 객체 리터럴로 적고 `()`대신 `[]`로 실행할 수도 있지요
 
@@ -231,8 +234,7 @@ const punch = (a, t) => (isSameTeam(a, t) ? t : decrementHP(t));
 punch(jobe, michael); // Map({name:'Michael', hp:19, team: 'green'})
 ```
 
-`decrementHP`와 `isSameTeam`, `punch`는 모두 순수하고 따라서 참조 투명합니다. 이제 **equational reasoning**이란 기술을 사용할 수 있어요. 이것은 코드를 보면서 "같은 것을 같은 것으로" 치환하는 방법을 말해요. 프로그램의 이상한 계산을 염두하지 않고 손수 코드를 계산하는 것과 약간 비슷합니다. 이 코드에 참조 투명성을 적용해볼까요?
-`decrementHP`, `isSameTeam` and `punch` are all pure and therefore referentially transparent. We can use a technique called _equational reasoning_ wherein one substitutes "equals for equals" to reason about code. It's a bit like manually evaluating the code without taking into account the quirks of programmatic evaluation. Using referential transparency, let's play with this code a bit.
+`decrementHP`와 `isSameTeam`, `punch`는 모두 순수하고 따라서 참조 투명합니다. 이제 **등식적 추론**이란 기술을 사용할 수 있어요. 이것은 코드를 보면서 "같은 것을 같은 것으로" 치환하는 방법을 말해요. 프로그램의 이상한 계산을 염두하지 않고 손수 코드를 계산하는 것과 약간 비슷합니다. 이 코드에 참조 투명성을 적용해볼까요? `decrementHP`, `isSameTeam` 그리고 `punch` 모두 순수하고 참조 투명성을 지닙니다. 코드에 대해 추론할 때 "같은 것을 같은 것으로" 치환하는 등식적 추론 기법을 사용할 수 있습니다. 이는 프로그래밍 평가의 특성을 고려하지 않고 수동으로 코드를 평가하는 것과 비슷합니다. 참조 투명성을 사용하여 이 코드를 조금 살펴봅시다.
 
 먼저, `isSameTeam` 함수를 인라인시켜 봅시다.
 
@@ -258,13 +260,13 @@ const punch = (a, t) => decrementHP(t);
 const punch = (a, t) => t.set("hp", t.get("hp") - 1);
 ```
 
-이런식으로 코드를 다룰 수 있는 것은 일반적인 리팩토링을 하거나 코드를 이해할 때 큰 도움이 됩니다. 사실 우리는 갈매기 무리 프로그램을 리팩토링 할 때 이 방법을 사용했었어요. 덧셈과 곱셈에 마구(harness)를 채울 때 equational reasoning을 사용했지요. 또 우리는 이 기술을 이 책에 걸쳐서 사용하게 될 거에요.
+이런식으로 코드를 다룰 수 있는 것은 일반적인 리팩토링을 하거나 코드를 이해할 때 큰 도움이 됩니다. 사실 우리는 갈매기 무리 프로그램을 리팩토링 할 때 이 방법을 사용했었어요. 덧셈과 곱셈에 마구(harness)를 채울 때 등식적 추론을 사용했지요. 또 우리는 이 기술을 이 책에 걸쳐서 사용하게 될 거에요.
 
 ### 병렬 코드
 
-마침내, 마지막 일격입니다. 우리는 순수함수라면 무엇이든 병렬적으로 실행할 수 있어요. 순수함수는 공유 메모리에 접근할 필요가 없고 부수효과가 없기 때문에 부수효과때문에 생기는 race condition이 없기 때문이죠.
+마침내, 마지막 일격입니다. 우리는 순수함수라면 무엇이든 병렬적으로 실행할 수 있어요. 순수함수는 공유 메모리에 접근할 필요가 없고 부수효과가 없기 때문에 부수효과때문에 생기는 경쟁 조건이 없기 때문이죠.
 
-이것은 쓰레드를 사용하는 서버 사이드 js 환경과 웹 워커를 사용하는 브라우저 모두 가능합니다. 비록 현재의 개발 문화는 비순수 함수를 다루는 복잡성을 피하기 위해 이것을 피하지만요.
+이것은 쓰레드를 사용하는 서버 사이드 자바스크립트 환경과 웹 워커를 사용하는 브라우저 모두 가능합니다. 비록 현재의 개발 문화는 비순수 함수를 다루는 복잡성을 피하기 위해 이것을 피하지만요.
 
 ## 요약
 
