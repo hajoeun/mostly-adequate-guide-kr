@@ -1,6 +1,6 @@
 # 04 장: 커링
 
-## Can't Live If Livin' Is without You
+## 당신 없이는 살 수 없는 삶
 
 제 아버지는 사람이 그것들을 얻기 전까지 없이 살 수 있는 것들이 있다고 말씀하신 적이 있어요. 전자레인지나 스마트폰 등등이 그렇지요. 우리 중의 오래된 사람들은 인터넷 없는 삶을 사는 것을 기억할 것이에요. 저에게는 커링이 이 목록에 있습니다.
 
@@ -19,7 +19,7 @@ addTen(2); // 12
 
 우리는 인자를 하나 받고 함수를 반환하는 `add`를 만들었어요. 이것을 호출해서 반환되는 함수는 클로져를 이용해 첫번째 인자를 기억하지요. 하지만 두 인자를 한번에 부르는 것은 좀 복잡한 일입니다. 그래서 우리는 함수를 조금 더 쉽게 만들고 호출할 수 있게 해주는 특별한 도우미 함수인 `curry`를 사용해 볼 것입니다.
 
-재미를 위해 몇가지 커리된 함수를 만들어볼까요. 이제부터 우리는 [Appendix A - Essential Function Support](./appendix_a.md)에 정의된 `curry`를 소환할것입니다.
+재미를 위해 몇가지 커리된 함수를 만들어볼까요. 이제부터 우리는 [Appendix A - Essential Function Support](appendix\_a.md)에 정의된 `curry`를 소환할것입니다.
 
 ```js
 const match = curry((what, s) => s.match(what));
@@ -30,7 +30,7 @@ const map = curry((f, xs) => xs.map(f));
 
 여기서 사용한 패턴은 간단하지만 주목할 점이 있습니다. 저는 의도적으로 데이터(String, Array)를 마지막 인자에 두었어요. 왜 이렇게 했는지는 차차 명확해질겁니다.
 
-(`/r/g` 문법은 **모든 'r'**을 가르키는 정규 표현식입니다. 궁금하다면 [정규 표현식](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)에 대한 글을 읽어보세요.)
+(`/r/g` 문법은 \*\*모든 'r'\*\*을 가르키는 정규 표현식입니다. 궁금하다면 [정규 표현식](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular\_Expressions)에 대한 글을 읽어보세요.)
 
 ```js
 match(/r/g, "hello world"); // [ 'r' ]
@@ -70,7 +70,7 @@ const getChildren = (x) => x.childNodes;
 const allTheChildren = map(getChildren);
 ```
 
-보통 함수가 예상하는 것보다 덜 인자를 넘겨주는 것을 **부분 적용(partial application)**이라고 부릅니다. 함수에 부분 적용을 하면 보일러 플레이트 코드를 많이 줄여줍니다. losash의 커리되지 않은 `map`을 위의 `allTheChildren`에 사용하는 것을 생각해봅시다. 인자의 순서가 다르다는 것을 눈여겨보세요.
+보통 함수가 예상하는 것보다 덜 인자를 넘겨주는 것을 \*\*부분 적용(partial application)\*\*이라고 부릅니다. 함수에 부분 적용을 하면 보일러 플레이트 코드를 많이 줄여줍니다. losash의 커리되지 않은 `map`을 위의 `allTheChildren`에 사용하는 것을 생각해봅시다. 인자의 순서가 다르다는 것을 눈여겨보세요.
 
 ```js
 const allTheChildren = (elements) => map(elements, getChildren);
@@ -96,80 +96,32 @@ const allTheChildren = (elements) => map(elements, getChildren);
 
 #### 연습문제에 대하여
 
-Throughout the book, you might encounter an 'Exercises' section like this one. Exercises can be
-done directly in-browser provided you're reading from [gitbook](https://mostly-adequate.gitbooks.io/mostly-adequate-guide) (recommended).
+책 곳곳에 이와 같은 '연습' 섹션이 있을 수 있습니다. 연습은 gitbook에서 읽고 있는 경우 브라우저에서 바로 수행할 수 있습니다(권장).
 
-Note that, for all exercises of the book, you always have a handful of helper functions
-available in the global scope. Hence, anything that is defined in [Appendix A](./appendix_a.md),
-[Appendix B](./appendix_b.md) and [Appendix C](./appendix_c.md) is available for you! And, as
-if it wasn't enough, some exercises will also define functions specific to the problem
-they present; as a matter of fact, consider them available as well.
+이 책의 모든 연습에는 항상 전역 범위에서 사용할 수 있는 몇 가지 도우미 함수가 있다는 점에 유의하세요. 따라서 [부록 A](appendix\_a.md), [부록 B](appendix\_b.md), [부록 C](appendix\_c.md)에 정의된 모든 것을 사용할 수 있습니다! 또한 일부 연습 문제에서는 제시된 문제와 관련된 함수를 정의하는 경우도 있으므로 이 역시 사용할 수 있다고 생각하세요.
 
-> Hint: you can submit your solution by doing `Ctrl + Enter` in the embedded editor!
+> 힌트: 임베디드 에디터에서 Ctrl + Enter를 눌러 솔루션을 제출할 수 있습니다!
 
 #### Running Exercises on Your Machine (optional)
 
 Should you prefer to do exercises directly in files using your own editor:
 
-- clone the repository (`git clone git@github.com:MostlyAdequate/mostly-adequate-guide.git`)
-- go in the _exercises_ section (`cd mostly-adequate-guide/exercises`)
-- install the necessary plumbing using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (`npm install`)
-- complete answers by modifying the files named \*exercises\_\*\* in the corresponding chapter's folder
-- run the correction with npm (e.g. `npm run ch04`)
+* clone the repository (`git clone git@github.com:MostlyAdequate/mostly-adequate-guide.git`)
+* go in the _exercises_ section (`cd mostly-adequate-guide/exercises`)
+* install the necessary plumbing using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (`npm install`)
+* complete answers by modifying the files named \*exercises\_\*\* in the corresponding chapter's folder
+* run the correction with npm (e.g. `npm run ch04`)
 
-Unit tests will run against your answers and provide hints in case of mistake. By the by, the
-answers to the exercises are available in files named \*answers\_\*\*.
+Unit tests will run against your answers and provide hints in case of mistake. By the by, the answers to the exercises are available in files named \*answers\_\*\*.
 
 #### Let's Practice!
 
-{% exercise %}  
-Refactor to remove all arguments by partially applying the function.
+***
 
-{% initial src="./exercises/ch04/exercise_a.js#L3;" %}
-
-```js
-const words = (str) => split(" ", str);
-```
-
-{% solution src="./exercises/ch04/solution_a.js" %}  
-{% validation src="./exercises/ch04/validation_a.js" %}  
-{% context src="./exercises/support.js" %}  
-{% endexercise %}
-
----
-
-{% exercise %}  
-Refactor to remove all arguments by partially applying the functions.
-
-{% initial src="./exercises/ch04/exercise_b.js#L3;" %}
-
-```js
-const filterQs = (xs) => filter((x) => match(/q/i, x), xs);
-```
-
-{% solution src="./exercises/ch04/solution_b.js" %}  
-{% validation src="./exercises/ch04/validation_b.js" %}  
-{% context src="./exercises/support.js" %}  
-{% endexercise %}
-
----
+***
 
 Considering the following function:
 
 ```js
 const keepHighest = (x, y) => (x >= y ? x : y);
 ```
-
-{% exercise %}  
-Refactor `max` to not reference any arguments using the helper function `keepHighest`.
-
-{% initial src="./exercises/ch04/exercise_c.js#L7;" %}
-
-```js
-const max = (xs) => reduce((acc, x) => (x >= acc ? x : acc), -Infinity, xs);
-```
-
-{% solution src="./exercises/ch04/solution_c.js" %}  
-{% validation src="./exercises/ch04/validation_c.js" %}  
-{% context src="./exercises/support.js" %}  
-{% endexercise %}
